@@ -1,12 +1,8 @@
 package hamming;
 public class BitUtils {
     public static int[] stringToBitArray(String input) {
-        if (input.length() != 7) {
-            throw new IllegalArgumentException("Длина входной строки должна быть 7 символов");
-        }
-
-        int[] bits = new int[7];
-        for (int i = 0; i < 7; i++) {
+        int[] bits = new int[input.length()];
+        for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
             if (ch != '0' && ch != '1') {
                 throw new IllegalArgumentException("Ввод может содержать только символы '0' и '1'");

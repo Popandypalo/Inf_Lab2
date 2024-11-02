@@ -1,14 +1,32 @@
 package hamming;
+
 public class HammingErrorDetector implements ErrorDetection {
     private HammingStatus status = HammingStatus.NO_ERROR;
 
     @Override
     public int detectError(int[] codeword) {
-        int s1 = codeword[6] ^ codeword[4] ^ codeword[2] ^ codeword[0];
-        int s2 = codeword[6] ^ codeword[5] ^ codeword[2] ^ codeword[1];
-        int s3 = codeword[6] ^ codeword[5] ^ codeword[4] ^ codeword[3];
+        int m = 0;
+        while (Math.pow(2, m) < codeword.length + 1) {
+            m++;
+        }
 
-        int errorPosition = (s3 << 2) | (s2 << 1) | s1;
+        int[] syndrome = new int[m];
+
+        for (int i = 0; i < m; i++) {
+            int p = 1 << i;
+            int parity = 0;
+            for (int j = 1; j <= codeword.length; j++) {
+                if ((j & p) != 0) {
+                    parity ^= codeword[j - 1];
+                }
+            }
+            syndrome[i] = parity;
+        }
+
+        int errorPosition = 0;
+        for (int i = 0; i < m; i++) {
+            errorPosition += syndrome[i] << i;
+        }
 
         status = errorPosition != 0 ? HammingStatus.ERROR : HammingStatus.NO_ERROR;
 
@@ -20,4 +38,3 @@ public class HammingErrorDetector implements ErrorDetection {
         return status;
     }
 }
-

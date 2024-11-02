@@ -7,11 +7,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int[] codeword = null;
 
-        System.out.println("\u001B[34m********** Декодер Хэмминга(7,4) **********\u001B[0m");
+        System.out.println("\u001B[34m********** Декодер Хэмминга **********\u001B[0m");
 
         while (codeword == null) {
             try {
-                System.out.print("Введите кодовое слово (7 бит): ");
+                System.out.print("Введите кодовое слово: ");
                 String input = scanner.nextLine();
                 codeword = BitUtils.stringToBitArray(input);
             } catch (IllegalArgumentException e) {
@@ -25,6 +25,6 @@ public class Main {
         int[] dataBits = hammingCode.decode(codeword);
 
         System.out.println("Информационные биты:           " + BitUtils.bitArrayToString(dataBits));
-        System.out.println("\u001B[34m*******************************************\u001B[0m");
+        System.out.println("\u001B[34m**************************************\u001B[0m");
     }
 }
